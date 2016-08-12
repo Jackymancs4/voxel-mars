@@ -28,7 +28,8 @@ class NavMaps
       window.location = "#lat=#{pos.lat}&lng=#{pos.lng}"
       window.location.reload()
 
-  update: (pos) ->
+  update: (pos, rot) ->
+
     if not @lastUpdate or +new Date() - @lastUpdate > 100
       @lastUpdate = +new Date()
 
@@ -38,10 +39,13 @@ class NavMaps
       top = Math.floor(pos.z / voxelSize) / @world.height * height
       left = Math.floor(pos.x / voxelSize) / @world.width * width
 
-      if @global then @img.css marginLeft: 0, marginTop: 0
+      if @global then @img.css transform: "none", marginLeft: 0, marginTop: 0
       else
         half = @container.width() / 2
-        @img.css marginTop: -top + half, marginLeft: -left + half
+
+        rotation = (rot.y%(Math.PI*2))*180/Math.PI
+
+        @img.css transform: "rotate(#{rotation}deg)", transformOrigin: "#{left}px #{top}px", marginTop: -top + half, marginLeft: -left + half
         left = top = half
 
       @horizontal.css {top, width}

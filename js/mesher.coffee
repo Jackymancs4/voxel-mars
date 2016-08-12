@@ -25,38 +25,39 @@ class Mesher
 
   createGeometry: ->
     {shadow, light} = this
+    {voxelSize} = @config
 
     @pxGeometry = @generateVoxelGeometry
       faces: [[light, shadow, light], [shadow, shadow, light]]
-      rotationY: Math.PI / 2, translation: [50, 0, 0]
+      rotationY: Math.PI / 2, translation: [voxelSize/2, 0, 0]
       uvs: (fvu) -> [fvu[0][0][0], fvu[0][0][2], fvu[0][1][2]]
 
     @pxVertexColors = (@pxGeometry.faces[i].vertexColors for i in [0..1])
 
     @nxGeometry = @generateVoxelGeometry
       faces: [[light, shadow, light], [shadow, shadow, light]]
-      rotationY: -Math.PI / 2, translation: [-50, 0, 0]
+      rotationY: -Math.PI / 2, translation: [-voxelSize/2, 0, 0]
       uvs: (fvu) -> [fvu[0][0][0], fvu[0][0][2], fvu[0][1][2]]
 
     @nxVertexColors = (@nxGeometry.faces[i].vertexColors for i in [0..1])
 
     @pyGeometry = @generateVoxelGeometry
       faces: [[light, light, light], [light, light, light]]
-      rotationX: -Math.PI / 2, translation: [0, 50, 0]
+      rotationX: -Math.PI / 2, translation: [0, voxelSize/2, 0]
       uvs: (fvu) -> [fvu[0][0][1], fvu[0][1][0], fvu[0][1][1]]
 
     @pyVertexColors = (@pyGeometry.faces[i].vertexColors for i in [0..1])
 
     @pzGeometry = @generateVoxelGeometry
       faces: [[light, shadow, light], [shadow, shadow, light]]
-      translation: [0, 0, 50]
+      translation: [0, 0, voxelSize/2]
       uvs: (fvu) -> [fvu[0][0][0], fvu[0][0][2], fvu[0][1][2]]
 
     @pzVertexColors = (@pzGeometry.faces[i].vertexColors for i in [0..1])
 
     @nzGeometry = @generateVoxelGeometry
       faces: [[light, shadow, light], [shadow, shadow, light]]
-      rotationY: Math.PI, translation: [0, 0, -50]
+      rotationY: Math.PI, translation: [0, 0, -voxelSize/2]
       uvs: (fvu) -> [fvu[0][0][0], fvu[0][0][2], fvu[0][1][2]]
 
     @nzVertexColors = (@nzGeometry.faces[i].vertexColors for i in [0..1])

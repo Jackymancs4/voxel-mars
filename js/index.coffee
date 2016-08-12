@@ -182,7 +182,7 @@ class Game
     @light.update(@clock)
 
     @infoPanel.update(@camera.yaw.position)
-    @navMaps.update(@camera.yaw.position)
+    @navMaps.update(@camera.yaw.position, @camera.yaw.rotation)
 
     window.requestAnimationFrame @step
 
